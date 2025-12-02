@@ -1,0 +1,725 @@
+/* ==================================== */
+/* ESTILOS DEL CATÁLOGO / PÁGINA PRINCIPAL */
+/* ==================================== */
+
+.main-content-wrapper {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Header del Catálogo (Título y Búsqueda) */
+.catalog-header-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+
+.catalog-header-area h2 {
+    font-size: 1.8em;
+    color: #343a40;
+    margin: 0;
+}
+
+/* Formulario de Búsqueda */
+.search-form {
+    display: flex;
+    gap: 5px;
+}
+
+.search-input {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 300px;
+    font-size: 1em;
+}
+
+.search-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Cuadrícula de Libros (El corazón del diseño) */
+.book-grid {
+    display: grid;
+    /* 4 columnas en escritorios, se ajusta a pantallas más pequeñas */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    gap: 30px;
+    padding-bottom: 50px;
+}
+
+/* Tarjeta individual de Libro */
+.book-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.book-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.cover-wrapper {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.book-cover {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    padding: 10px;
+}
+
+.book-info {
+    padding: 15px;
+    min-height: 80px;
+}
+
+.book-title {
+    font-size: 1.1em;
+    margin: 0 0 5px 0;
+    line-height: 1.3;
+    color: #1a1a1a;
+}
+
+.book-author {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.book-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+}
+
+.price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #28a745; /* Verde para el precio */
+}
+
+.add-to-cart-quick {
+    background-color: #ffc107;
+    color: #343a40;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.add-to-cart-quick:hover {
+    background-color: #e0a800;
+}
+
+.carrito-icon-link {
+    /* Posicionamiento */
+    position: fixed; /* O fixed si quieres que se quede ahí al hacer scroll */
+    top: 20px; 
+    right: 20px;
+    
+    /* Estética */
+    font-size: 2em; /* Hace el ícono más grande */
+    text-decoration: none;
+    color: #333; /* Color oscuro */
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.carrito-icon-link:hover {
+    color: #007bff; /* Color al pasar el ratón */
+}
+
+/* 4. Estilo para el Contenedor de la Cuadrícula */
+.catalogo-grid {
+    display: flex;
+    flex-wrap: wrap;       /* Permite que los elementos salten de fila */
+    gap: 20px;             /* Espacio uniforme entre todas las tarjetas */
+    justify-content: flex-start; /* Alinea las tarjetas al inicio (izquierda) */
+    padding: 20px;
+    /* Ajusta el ancho para el layout de 4 columnas */
+    margin: 0 auto;
+    width: 100%; 
+}
+
+.libro-card {
+    /* --- INICIO DEL FIX DE 4 COLUMNAS --- */
+    
+    /* flex-basis es el tamaño preferido antes de que Flexbox calcule el espacio */
+    flex-basis: calc(25% - 15px); 
+    
+    /* CRÍTICO: Asegura que la tarjeta no se expanda más allá de lo necesario */
+    width: calc(25% - 15px); 
+    
+    /* El elemento no debe crecer ni encogerse (usamos el width/flex-basis para tamaño) */
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    /* --- FIN DEL FIX DE 4 COLUMNAS --- */
+    
+    /* Estilos de apariencia */
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+    min-width: 200px;
+}
+
+/* Opcional: Responsive para 2 columnas en móvil */
+@media (max-width: 768px) {
+    .libro-card {
+        width: calc(50% - 10px); /* Dos columnas */
+    }
+}
+
+/* ==================================== */
+/* ESTILOS DE RESPONSIVIDAD (MÓVIL) */
+/* ==================================== */
+
+/* Ajuste la regla principal de la cuadrícula para dispositivos más pequeños */
+@media (max-width: 576px) {
+    
+    /* 1. Cuadrícula de una sola columna (fuerza la vista móvil) */
+    .book-grid {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+
+    /* 2. Ajuste del Contenedor Principal */
+    .main-content-wrapper {
+        padding: 0 10px; /* Reducir el padding horizontal */
+    }
+    
+    /* 3. Ajuste del Encabezado (Título y Búsqueda) */
+    .catalog-header-area {
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    /* 4. Asegura que la búsqueda ocupe el 100% */
+    .search-form {
+        width: 100%;
+    }
+    
+    .search-input {
+        width: 100%;
+        box-sizing: border-box; 
+    }
+    
+    /* (Manten las otras reglas que ajustan la altura y padding si las tienes) */
+}
+
+/* Opcional: Breakpoint para Tablet (pantallas entre 577px y 992px) */
+@media (min-width: 577px) and (max-width: 992px) {
+    .book-grid {
+        /* Permite dos o tres columnas en tablet */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+        gap: 25px;
+    }
+}
+
+/* 3. ESTILOS PARA DETALLE DEL LIBRO */
+/* ==================================== */
+
+/* Contenedor principal de 2 columnas */
+.product-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 100px auto 50px auto;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+/* Columna 1: Imagen */
+.product-gallery {
+    flex: 1; /* Ocupa 1 parte del espacio */
+    padding-right: 40px;
+    text-align: center;
+}
+
+.main-cover {
+    max-width: 100%;
+    height: auto;
+    max-height: 500px; /* Limita la altura máxima de la portada */
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.cover-placeholder {
+    width: 350px;
+    height: 500px;
+    background-color: #f0f0f0;
+    line-height: 500px;
+    color: #999;
+    font-size: 1.2em;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+/* Columna 2: Detalles y Botones */
+.product-details {
+    flex: 1.5; /* Ocupa 1.5 partes, dando más espacio a la información */
+    padding-left: 20px;
+}
+
+.product-details h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Metadatos */
+.metadata p {
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+.metadata strong {
+    color: #555;
+}
+
+/* Precio y Stock */
+.price-tag {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #007bff; /* Color azul para destacar el precio */
+    display: block;
+    margin: 15px 0;
+}
+
+.stock-available {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.stock-agotado {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* Formulario y Botón de Carrito */
+.add-to-cart-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.qty-input {
+    width: 60px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.add-to-cart-btn {
+    background-color: #28a745; /* Botón de éxito (verde) */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #1e7e34;
+}
+
+.separator {
+    border: 0;
+    height: 1px;
+    background: #eee;
+    margin: 25px 0;
+}
+
+.back-to-catalog {
+    color: #007bff;
+    text-decoration: none;
+    display: block;
+    margin-top: 15px;
+}
+
+/* Estilos básicos para los mensajes de Django */
+.messages {
+    list-style: none;
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 5px;
+    max-width: 1200px; /* Igual al max-width del contenedor principal */
+}
+
+/* Mensajes de Éxito (Success) */
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Mensajes de Error (Error) */
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ==================================== */
+/* ESTILOS PARA LA VISTA DEL CARRITO */
+/* ==================================== */
+
+/* Estilo actual para desktop/tablet: */
+.cart-layout {
+    display: flex;
+    justify-content: space-between; /* O el estilo que estés usando */
+    gap: 30px; /* Separación entre ítems y resumen */
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* --------------- MEDIA QUERY PARA MÓVIL --------------- */
+
+@media (max-width: 768px) {
+    
+    /* CRÍTICO: Fuerza el apilamiento vertical */
+    .cart-layout {
+        flex-direction: column; 
+        gap: 30px;
+    }
+    
+    /* Opcional: Asegura que el contenedor de ítems y el resumen ocupen todo el ancho */
+    .cart-items, .cart-summary {
+        width: 100%;
+        max-width: none;
+    }
+    
+    /* Opcional: Estilos para que el formulario se vea mejor en la columna única */
+    .cart-summary {
+        padding: 20px 15px; /* Añadir padding dentro de la tarjeta de resumen */
+        border: 1px solid #ccc; /* Asegurar que la caja del formulario sea visible */
+        border-radius: 8px;
+    }
+
+    /* Ajustar el diseño de cada ítem del carrito para una mejor lectura en móvil */
+    .cart-item-card {
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    }
+
+    /* Asegura que la imagen y la info principal ocupen el 100% o estén bien alineadas */
+    .item-details-main {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    /* Mueve la cantidad y el total a nuevas líneas o ajústalos */
+    .item-quantity-control, .item-total, .item-actions {
+        width: 33%; /* O el ancho que desees */
+        text-align: center;
+        margin-top: 5px;
+    }
+}
+
+/* Columna Izquierda: Lista de Ítems */
+.cart-items {
+    flex: 2; /* Ocupa 2/3 del espacio */
+    padding: 20px;
+    border-right: 1px solid #eee; /* Separador visual */
+}
+
+/* Columna Derecha: Resumen */
+.cart-summary {
+    flex: 1; /* Ocupa 1/3 del espacio */
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    height: fit-content; /* Se ajusta a la altura de su contenido */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.cart-summary h2 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+/* Estilo de cada Ítem en la lista */
+.cart-item-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.item-details-main {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex: 2;
+}
+
+.item-cover-wrapper {
+    width: 80px;
+    height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.item-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.item-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+}
+
+/* Define el espacio y la apariencia del botón */
+.item-actions {
+    /* Define el ancho de la columna de acción si es necesario */
+    flex-basis: 100px; 
+    text-align: right;
+}
+
+/* Asegura que el formulario no tome espacio extra */
+.remove-form {
+    margin: 0;
+    padding: 0;
+    display: inline; /* Importante para que no rompa el diseño flex de .cart-item-card */
+}
+
+.remove-btn {
+    /* Mantenemos los estilos del botón/enlace anterior */
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #dc3545; /* Rojo para advertencia/eliminación */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer; /* Indica que es clickeable */
+    
+    /* CRÍTICO: Elimina el borde predeterminado del botón HTML */
+    border: none; 
+}
+
+.remove-btn:hover {
+    background-color: #c82333;
+}
+
+/* Detalles de Cantidad y Subtotal */
+.item-quantity-control {
+    text-align: right;
+    flex: 1;
+}
+
+/* Resumen de la compra */
+.summary-details p {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 1.1em;
+}
+
+.grand-total {
+    font-weight: bold;
+    font-size: 1.4em !important;
+    color: #007bff;
+    padding-top: 10px;
+}
+
+/* Formulario de Checkout (Datos de Contacto) */
+.checkout-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Importante para que el padding no exceda el 100% */
+}
+
+.checkout-btn {
+    width: 100%;
+    background-color: #28a745; /* Verde para la acción final */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.checkout-btn:hover:not([disabled]) {
+    background-color: #1e7e34;
+}
+
+/* ==================================== */
+/* ESTILOS PARA LA PÁGINA DE CONFIRMACIÓN (ORDEN_CONFIRMADA.HTML) */
+/* ==================================== */
+
+.confirmation-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente (si el body es suficientemente alto) */
+    min-height: 80vh; /* Asegura que ocupe casi toda la altura visible */
+    padding: 20px;
+    background-color: #f4f7f9; /* Fondo muy claro */
+}
+
+.confirmation-card {
+    background-color: white;
+    padding: 40px 60px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.status-icon {
+    font-size: 3.5em; /* Tamaño grande del emoji */
+    margin-bottom: 15px;
+}
+
+.confirmation-card h2 {
+    font-size: 2.2em;
+    color: #1a1a1a;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.order-number-label {
+    font-size: 1em;
+    color: #6c757d; /* Gris claro */
+    margin: 0;
+}
+
+.order-id {
+    font-size: 3em;
+    font-weight: 700;
+    color: #007bff; /* Azul primario para destacar */
+    margin: 5px 0 25px 0;
+}
+
+.next-step-text {
+    font-size: 1.1em;
+    color: #343a40;
+    margin-bottom: 30px;
+}
+
+/* Botón de WhatsApp - Llamado a la acción principal */
+.whatsapp-btn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #25D366; /* Color de WhatsApp */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    font-size: 1.1em;
+    transition: background-color 0.2s;
+}
+
+.whatsapp-btn:hover {
+    background-color: #128c7e;
+}
+
+.info-note {
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.back-to-catalog-btn {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1em;
+    border-bottom: 1px dashed #007bff;
+    padding-bottom: 2px;
+}
+
+.back-to-catalog-btn:hover {
+    color: #0056b3;
+}
+
+/* Sección de Sinópsis en Detalle Libro */
+
+
+.sinopsis-block {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sinopsis-block h2 {
+    font-size: 1.5em;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.sinopsis-block p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #555;
+    text-align: justify;
+}

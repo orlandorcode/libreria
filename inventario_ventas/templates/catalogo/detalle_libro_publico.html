@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo | Librería El Gato Pirata</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+<header class="main-header">
+    <div class="header-content">
+        <h1>
+            <a href="{% url 'catalogo_libros' %}" class="header-link">Librería El Gato Pirata</a>
+        </h1>
+        <a href="{% url 'carrito_detail' %}" class="carrito-icon-link">
+        🛒 <span class="cart-count">{% if carrito %}{{ carrito|length }}{% else %}0{% endif %}</span> 
+        </a>
+
+    </div>
+</header>
+
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <div class="product-container">
+
+        <div class="product-gallery">
+            {% if libro.portada %}
+                <img src="{{ libro.portada.url }}" alt="Portada de {{ libro.nombre }}" class="main-cover">
+            {% else %}
+                <div class="cover-placeholder">Sin Portada Disponible</div>
+            {% endif %}
+        </div>
+
+        <div class="product-details">
+
+            <h1>{{ libro.nombre }}</h1>
+
+            <div class="metadata">
+                <p><strong>Autor:</strong> {{ libro.autor }}</p>
+                
+                {% if libro.ilustrador %}
+                    <p><strong>Ilustrador:</strong> {{ libro.ilustrador }}</p>
+                {% endif %}
+                
+                <p><strong>Editorial:</strong> {{ libro.editorial.nombre }}</p>
+                </div>
+
+                {% if libro.sinopsis %}
+                <hr class="separator">
+                <div class="sinopsis-block">
+                    <strong>Sinopsis</strong>
+                    <p>{{ libro.sinopsis|linebreaksbr }}</p>
+                </div>
+                {% endif %}
+            
+            <hr class="separator">
+
+            <div class="price-and-stock">
+                <span class="price-tag">${{ libro.precio_venta }} MXN</span>
+                
+                {% if stock > 0 %}
+                    <p class="stock-available">Stock: {{ stock }} disponibles</p>
+                {% else %}
+                    <p class="stock-agotado">AGOTADO</p>
+                {% endif %}
+            </div>
+
+            {% if stock > 0 %}
+            <form action="{% url 'carrito_add' libro.id %}" method="post" class="add-to-cart-form">
+                {% csrf_token %}
+                
+                <div class="quantity-control">
+                    <input type="number" 
+                        name="cantidad" 
+                        value="1" 
+                        min="1" 
+                        max="{{ stock }}" 
+                        class="qty-input">
+                </div>
+
+                <button type="submit" class="add-to-cart-btn">
+                    🛒 Añadir al Carrito
+                </button>
+            </form>
+            {% endif %}
+
+            <hr class="separator">
+            <a href="{% url 'catalogo_libros' %}" class="back-to-catalog">← Volver al catálogo</a>
+
+        </div>
+    </div>
+</body>

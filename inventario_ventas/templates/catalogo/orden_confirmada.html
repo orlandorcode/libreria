@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo | Librería El Gato Pirata</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-content">
+        <h1>
+            <a href="{% url 'catalogo_libros' %}" class="header-link">Librería El Gato Pirata</a>
+        </h1>
+        <a href="{% url 'carrito_detail' %}" class="carrito-icon-link">
+        🛒 <span class="cart-count">{% if carrito %}{{ carrito|length }}{% else %}0{% endif %}</span> 
+        </a>
+
+    </div>
+</header>
+
+    <div class="confirmation-container">
+        <div class="confirmation-card">
+            
+            <div class="status-icon success-icon">
+                ✅
+            </div>
+            
+            <h2>¡Orden Recibida!</h2>
+            
+            {% if order_id %}
+                <p class="order-number-label">Tu número de orden es:</p>
+                <p class="order-id">#{{ order_id }}</p>
+            {% endif %}
+
+            <p class="next-step-text">
+                El siguiente paso es contactarnos por WhatsApp para confirmar la dirección, el pago y los detalles del envío.
+            </p>
+
+            {% if whatsapp_url %}
+                <a href="{{ whatsapp_url }}" 
+                   id="whatsapp-link" 
+                   target="_blank" 
+                   class="whatsapp-btn">
+                   🟢 Enviar Detalles de Orden por WhatsApp
+                </a>
+            {% else %}
+                <p class="error-message">Hubo un error al generar el enlace de WhatsApp.</p>
+            {% endif %}
+
+            <p class="info-note">(Serás redirigido a WhatsApp con el mensaje de tu pedido ya escrito)</p>
+
+            <a href="{% url 'catalogo_libros' %}" class="back-to-catalog-btn">← Volver al Catálogo</a>
+
+        </div>
+    </div>
+
+</body>
+</html>

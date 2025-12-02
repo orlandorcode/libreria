@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard de Administración</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f0f2f5; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .kpi-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .kpi-value { font-size: 2em; font-weight: bold; color: #007bff; }
+        .list-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-top: 20px; }
+        .list-section h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        ol, ul { padding-left: 20px; }
+    </style>
+</head>
+<body>
+    <h1>📊 Dashboard de Ventas</h1>
+
+    <h2>Reporte de Ingresos</h2>
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <p>Ventas Totales Hoy</p>
+            <div class="kpi-value">${{ ventas_hoy }}</div>
+        </div>
+        <div class="kpi-card">
+            <p>Ventas Últimos 7 Días</p>
+            <div class="kpi-value">${{ ventas_semana }}</div>
+        </div>
+        <div class="kpi-card">
+            <p>Total de Libros Bajo Stock</p>
+            <div class="kpi-value">{{ libros_bajo_stock|length }}</div>
+        </div>
+    </div>
+
+    <div class="kpi-grid">
+        <div class="list-section">
+            <h3>Clientes con Mayor Gasto (Top 5)</h3>
+            <ol>
+                {% for cliente in clientes_top %}
+                    <li>{{ cliente.nombre }} {{ cliente.apellido }} - ${{ cliente.gasto_total|default:"0.00" }}</li>
+                {% empty %}
+                    <li>No hay ventas registradas.</li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <div class="list-section">
+            <h3>Libros Más Vendidos (Top 10)</h3>
+            <ol>
+                {% for libro in libros_mas_vendidos %}
+                    <li>{{ libro.libro__nombre }} ({{ libro.cantidad_vendida }} uds)</li>
+                {% empty %}
+                    <li>No hay detalles de venta.</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+    
+    <div class="list-section">
+        <h3>🚨 Libros con Bajo Inventario (Menos de 20 uds)</h3>
+        <ul>
+            {% for libro in libros_bajo_stock %}
+                <li>{{ libro.nombre }} (Stock: {{ libro.total_stock }})</li>
+            {% empty %}
+                <li>Inventario en niveles saludables.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>

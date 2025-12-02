@@ -1,0 +1,30 @@
+{% load static %}
+
+<header class="main-header">
+    <div class="header-content">
+        <h1>Librería Centraka</h1>
+        <a href="{% url 'carrito_detail' %}" class="carrito-icon-link">
+        🛒 <span class="cart-count">{% if carrito %}{{ carrito|length }}{% else %}0{% endif %}</span> 
+        </a>
+
+    </div>
+
+
+</header>
+
+<h1>{{ libro.nombre }}</h1>
+<p>Autor: {{ libro.autor }}</p>
+<p>Editorial: {{ libro.editorial.nombre }}</p>
+<p>Precio: ${{ libro.precio_venta }}</p>
+<p>Stock: {{ stock }} unidades</p>
+
+{% if stock > 0 %}
+    <form action="{% url 'carrito_add' libro.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }} <input type="submit" value="Añadir al Carrito">
+    </form>
+{% else %}
+    <p style="color: red;">Producto agotado.</p>
+{% endif %}
+
+<p><a href="{% url 'catalogo_libros' %}">Volver al catálogo</a></p>

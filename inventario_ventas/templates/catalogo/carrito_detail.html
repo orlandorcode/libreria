@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo | Librería El Gato Pirata</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<header class="main-header">
+    <div class="header-content">
+        <h1>
+            <a href="{% url 'catalogo_libros' %}" class="header-link">Librería El Gato Pirata</a>
+        </h1>
+        <a href="{% url 'carrito_detail' %}" class="carrito-icon-link">
+        🛒 <span class="cart-count">{% if carrito %}{{ carrito|length }}{% else %}0{% endif %}</span> 
+        </a>
+
+    </div>
+</header>
+
+<body>
+
+<h1>🛒 Tu Carrito de Compras</h1>
+
+<div class="cart-layout">
+    
+    <div class="cart-items">
+        
+        {% if carrito %}
+            {% for item in carrito %}
+                <div class="cart-item-card">
+                    
+                    <div class="item-details-main">
+                        <div class="item-cover-wrapper">
+                            {% if item.libro.portada %}
+                                <img src="{{ item.libro.portada.url }}" alt="{{ item.libro.nombre }}" class="item-cover">
+                            {% else %}
+                                <div class="item-cover-placeholder"></div>
+                            {% endif %}
+                        </div>
+                        <div class="item-info">
+                            <h3><a href="{% url 'detalle_libro' pk=item.libro.id %}">{{ item.libro.nombre }}</a></h3>
+                            <p>Autor: {{ item.libro.autor }}</p>
+                            <p>Precio Unitario: ${{ item.precio }}</p>
+                        </div>
+                    </div>
+
+                    <div class="item-quantity-control">
+                        <p>Cantidad: <strong>{{ item.cantidad }}</strong></p>
+                        <p>Subtotal: <strong>${{ item.total_linea|floatformat:2 }}</strong></p>
+                    </div>
+
+                </div>
+                <hr>
+            {% endfor %}
+            
+            <a href="{% url 'catalogo_libros' %}" class="back-to-catalog">← Continuar comprando</a>
+        
+        {% else %}
+            <p class="empty-cart-message">Tu carrito está vacío. ¡Añade libros!</p>
+            <a href="{% url 'catalogo_libros' %}" class="back-to-catalog">← Continuar comprando</a>
+
+        {% endif %}
+
+    </div>
+
+    <div class="cart-summary">
+        <h2>Resumen de la Compra</h2>
+        
+        <div class="summary-details">
+            <p>Subtotal de ítems: <span>${{ carrito.get_total_price }}</span></p>
+            <p>Costo de Envío: <span>Pendiente</span></p>
+            <hr>
+            <p class="grand-total">Subtotal: <span>${{ carrito.get_total_price }}</span></p>
+        </div>
+
+        <h3>Datos de Contacto</h3>
+        <form method="post" action="{% url 'orden_checkout' %}" class="checkout-form">
+            {% csrf_token %}
+            {{ checkout_form.as_p }} 
+
+            <button type="submit" class="checkout-btn" {% if not carrito %}disabled{% endif %}>
+                Finalizar Pedido y Contactar
+            </button>
+        </form>
+    </div>
+</div>
+
+</body>

@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo | Librería El Gato Pirata</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+
+<header class="main-header">
+    <div class="header-content">
+        <h1>
+            <a href="{% url 'catalogo_libros' %}" class="header-link">Librería El Gato Pirata</a>
+        </h1>
+        <a href="{% url 'carrito_detail' %}" class="carrito-icon-link">
+        🛒 <span class="cart-count">{% if carrito %}{{ carrito|length }}{% else %}0{% endif %}</span> 
+        </a>
+
+    </div>
+</header>
+
+    <div class="main-content-wrapper">
+    
+    <div class="catalog-header-area">
+        <h2>📚 Catálogo Completo de Libros</h2>
+        
+        <form method="get" class="search-form">
+            <input type="text" name="q" placeholder="Buscar por título o autor..." 
+                   value="{{ request.GET.q|default:'' }}" class="search-input">
+            <button type="submit" class="search-btn">🔍</button>
+        </form>
+    </div>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="django-message {{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if object_list %}
+        <div class="book-grid">
+            {% for libro in object_list %}
+                <div class="book-card">
+                    <a href="{% url 'detalle_libro' pk=libro.id %}" class="book-link">
+                        <div class="cover-wrapper">
+                            {% if libro.portada %}
+                                <img src="{{ libro.portada.url }}" alt="Portada de {{ libro.nombre }}" class="book-cover">
+                            {% else %}
+                                <div class="cover-placeholder">Sin Portada</div>
+                            {% endif %}
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">{{ libro.nombre }}</h3>
+                            <p class="book-author">{{ libro.autor }}</p>
+                        </div>
+                    </a>
+                    <div class="book-footer">
+                        <span class="price">${{ libro.precio_venta }} MXN</span>
+                        <a href="{% url 'carrito_add' libro.id %}" class="add-to-cart-quick">
+                            + 🛒
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        {% else %}
+        <p class="no-results-message">No se encontraron libros que coincidan con la búsqueda.</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
