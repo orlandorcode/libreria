@@ -478,6 +478,16 @@ body {
 /* ESTILOS PARA LA VISTA DEL CARRITO */
 /* ==================================== */
 
+
+/* Alinea el H1 del carrito con el contenedor .cart-layout */
+.carrito-title {
+    max-width: 1200px;
+    margin: 20px auto 10px auto; /* 20px arriba, auto lados (centrado), 10px abajo */
+    padding: 0 20px; /* Igual que el padding horizontal del .cart-layout */
+    font-size: 2em; /* Puedes ajustar el tamaño */
+    color: #343a40;
+}
+
 /* Estilo actual para desktop/tablet: */
 .cart-layout {
     display: flex;
@@ -488,80 +498,43 @@ body {
     padding: 0 20px;
 }
 
-/* --------------- MEDIA QUERY PARA MÓVIL --------------- */
+.item-cover-wrapper {
+    width: 80px;
+    height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
 
-@media (max-width: 768px) {
-    
-    /* CRÍTICO: Fuerza el apilamiento vertical */
-    .cart-layout {
-        flex-direction: column; 
-        gap: 30px;
-    }
-    
-    /* Opcional: Asegura que el contenedor de ítems y el resumen ocupen todo el ancho */
-    .cart-items, .cart-summary {
-        width: 100%;
-        max-width: none;
-    }
-    
-    /* Opcional: Estilos para que el formulario se vea mejor en la columna única */
-    .cart-summary {
-        padding: 20px 15px; /* Añadir padding dentro de la tarjeta de resumen */
-        border: 1px solid #ccc; /* Asegurar que la caja del formulario sea visible */
-        border-radius: 8px;
-    }
+.item-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 
-    /* Ajustar el diseño de cada ítem del carrito para una mejor lectura en móvil */
-    .cart-item-card {
+/* Ajustar el diseño de cada ítem del carrito para una mejor lectura en móvil */
+.cart-item-card {
         flex-wrap: wrap; /* Permite que los elementos se envuelvan */
-    }
+}
 
-    /* Asegura que la imagen y la info principal ocupen el 100% o estén bien alineadas */
-    .item-details-main {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    /* Mueve la cantidad y el total a nuevas líneas o ajústalos */
-    .item-quantity-control, .item-total, .item-actions {
-        width: 33%; /* O el ancho que desees */
-        text-align: center;
-        margin-top: 5px;
-    }
-    
-    /* CRÍTICO: Corregir los estilos del header para que no se apilen verticalmente y el logo no se mueva */
-    .header-content {
-        /* Usamos la configuración por defecto, pero ajustamos el padding para móvil */
-        flex-direction: row; 
-        align-items: center; /* Centra los elementos verticalmente */
-        max-width: none; /* No limita el ancho máximo */
-        margin: 0;
-        padding: 10px; /* Un padding simple para los bordes */
-    }
+/* Asegura que la imagen y la info principal ocupen el 100% o estén bien alineadas */
+.item-details-main {
+    width: 100%;
+    margin-bottom: 10px;
+}
+/* Mueve la cantidad y el total a nuevas líneas o ajústalos */
+.item-quantity-control, .item-total, .item-actions {
+    width: 33%; /* O el ancho que desees */
+    text-align: center;
+    margin-top: 5px;
+}
 
-    /* Ajuste para que la imagen sea un poco más pequeña en móvil */
-    .header-logo {
-        width: 200px; 
-        height: auto;
-    }
-    
-    .logo-text {
-        font-size: 0.65em; 
-    }
-    
-    /* Aseguramos que el carrito siga fluyendo normalmente */
-    .carrito-icon-link {
-        position: static; 
-        top: auto; 
-        right: auto;
-        box-shadow: none; /* Quitamos la sombra para que se integre mejor */
-        font-size: 1.8em;
-    }
 
-    /* 3. Ajuste opcional para el título */
-    .header-content h1 {
-        margin-bottom: 0; /* Asegura que no haya un margen excesivo debajo del título */
-    }
-
+.cart-summary {
+    padding: 20px 15px; /* Añadir padding dentro de la tarjeta de resumen */
+    border: 1px solid #ccc; /* Asegurar que la caja del formulario sea visible */
+    border-radius: 8px;
+}    
 
 /* Columna Izquierda: Lista de Ítems */
 .cart-items {
@@ -602,19 +575,7 @@ body {
     flex: 2;
 }
 
-.item-cover-wrapper {
-    width: 80px;
-    height: 120px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    overflow: hidden;
-}
 
-.item-cover {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
 
 .item-info h3 {
     margin: 0 0 5px 0;
@@ -708,6 +669,109 @@ body {
 
 .checkout-btn:hover:not([disabled]) {
     background-color: #1e7e34;
+}
+
+/* --------------- MEDIA QUERY PARA MÓVIL --------------- */
+
+@media (max-width: 768px) {
+
+
+    /* --- VISTA CATÁLOGO --- */
+    
+    .book-grid {
+        /* CRÍTICO: Muestra solo una columna en móviles */
+        grid-template-columns: 1fr; 
+        gap: 20px; /* Ajusta el espacio entre ítems apilados */
+    }
+
+    /* Opcional: Asegurar que el card ocupe todo el ancho disponible */
+    .book-card {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    /* Opcional: Centrar y reducir el área del Header del Catálogo */
+    .catalog-header-area {
+        flex-direction: column; /* Apila título y búsqueda */
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+    
+    .search-input {
+        width: 100%; /* El campo de búsqueda ocupa todo el ancho */
+        max-width: none;
+    }
+    
+    /* CRÍTICO: Fuerza el apilamiento vertical */
+    .cart-layout {
+        flex-direction: column; 
+        gap: 30px;
+    }
+    
+    /* Opcional: Asegura que el contenedor de ítems y el resumen ocupen todo el ancho */
+    .cart-items, .cart-summary {
+        width: 100%;
+        max-width: none;
+    }
+    
+    /* Opcional: Estilos para que el formulario se vea mejor en la columna única */
+    .cart-summary {
+        padding: 20px 15px; /* Añadir padding dentro de la tarjeta de resumen */
+        border: 1px solid #ccc; /* Asegurar que la caja del formulario sea visible */
+        border-radius: 8px;
+    }
+
+    /* Ajustar el diseño de cada ítem del carrito para una mejor lectura en móvil */
+    .cart-item-card {
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    }
+
+    /* Asegura que la imagen y la info principal ocupen el 100% o estén bien alineadas */
+    .item-details-main {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    /* Mueve la cantidad y el total a nuevas líneas o ajústalos */
+    .item-quantity-control, .item-total, .item-actions {
+        width: 33%; /* O el ancho que desees */
+        text-align: center;
+        margin-top: 5px;
+    }
+    
+    /* CRÍTICO: Corregir los estilos del header para que no se apilen verticalmente y el logo no se mueva */
+    .header-content {
+        /* Usamos la configuración por defecto, pero ajustamos el padding para móvil */
+        flex-direction: row; 
+        align-items: center; /* Centra los elementos verticalmente */
+        max-width: none; /* No limita el ancho máximo */
+        margin: 0;
+        padding: 10px; /* Un padding simple para los bordes */
+    }
+
+    /* Ajuste para que la imagen sea un poco más pequeña en móvil */
+    .header-logo {
+        width: 200px; 
+        height: auto;
+    }
+    
+    .logo-text {
+        font-size: 0.65em; 
+    }
+    
+    /* Aseguramos que el carrito siga fluyendo normalmente */
+    .carrito-icon-link {
+        position: static; 
+        top: auto; 
+        right: auto;
+        box-shadow: none; /* Quitamos la sombra para que se integre mejor */
+        font-size: 1.8em;
+    }
+
+    /* 3. Ajuste opcional para el título */
+    .header-content h1 {
+        margin-bottom: 0; /* Asegura que no haya un margen excesivo debajo del título */
+    }
+
 }
 
 /* ==================================== */

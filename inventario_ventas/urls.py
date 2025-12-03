@@ -1,8 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from .views import (
     CatalogoLibrosView, DetalleLibroPublicoView, DashboardVentasView, # ¡Importar!
     carrito_add, carrito_remove, carrito_detail, orden_checkout, orden_confirmada, carrito_update_quantity
 )
+from django.conf import settings
+from django.conf.urls.static import static
+import os
 
 urlpatterns = [
     # Catálogo (ya existe)
@@ -25,3 +28,10 @@ urlpatterns = [
     # ... otras URLs
     
 ]
+
+if settings.DEBUG:
+    # 1. Manejo de Archivos Estáticos (CSS, JS)
+    urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'static')) 
+    
+    # 2. Manejo de Archivos de Medios (Imágenes de portada y black-cats.jpg)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
