@@ -1,12 +1,78 @@
+/* FUENTES */
+
+body {
+    /* * Pila de fuentes sans-serif:
+     * 1. 'Helvetica Neue', 'Arial', y 'sans-serif' son las más comunes y seguras.
+     * 2. 'system-ui' usa la fuente sans-serif predeterminada del sistema operativo (recomendado).
+     */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+
+
 /* ==================================== */
 /* ESTILOS DEL CATÁLOGO / PÁGINA PRINCIPAL */
 /* ==================================== */
+
 
 .main-content-wrapper {
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
 }
+
+/* --- Estilos para el Header con Logo --- */
+
+/* 1. Alineación del Header con el Contenido Principal */
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Empuja el carrito a la derecha */
+    align-items: flex-end; /* Alinea los elementos por la parte inferior */
+    
+    /* CRÍTICO PARA ALINEACIÓN: Usamos las mismas propiedades que .main-content-wrapper */
+    max-width: 1200px;
+    margin: 0 auto; /* Centra el contenido del header */
+    padding: 20px 20px 10px 20px; /* Padding izquierdo/derecho como el wrapper */
+}
+
+/* 2. Contenedor del logo */
+.logo-container {
+    display: flex; 
+    align-items: flex-end; /* Alinea con el carrito si está abajo */
+}
+
+/* 3. Enlace que contiene la imagen y el texto */
+.header-link-logo {
+    display: flex;
+    flex-direction: column; /* Apila la imagen y el texto */
+    align-items: flex-start; /* Alinea el contenido a la izquierda */
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 4. Estilo para reducir la imagen (rectangular) */
+.header-logo {
+    width: 300px; /* Tamaño pequeño, tú puedes ajustarlo (ej: 80px, 150px) */
+    height: auto; /* CRÍTICO: Mantiene la relación de aspecto original (rectangular) */
+    object-fit: contain; 
+    margin-bottom: 3px; 
+}
+
+/* 5. Estilo para el texto pequeño debajo de la imagen */
+.logo-text {
+    font-size: 0.75em; /* Texto pequeño */
+    margin: 0; 
+    font-weight: bold;
+    color: #343a40; 
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+}
+
+/* Ocultar el h1 original si todavía existe en algún lugar (solo de seguridad) */
+.header-content h1 {
+    display: none;
+}
+
+
 
 /* Header del Catálogo (Título y Búsqueda) */
 .catalog-header-area {
@@ -39,7 +105,7 @@
 }
 
 .search-btn {
-    background-color: #007bff;
+    background-color: #ffaa00;
     color: white;
     border: none;
     border-radius: 20px;
@@ -49,7 +115,7 @@
 }
 
 .search-btn:hover {
-    background-color: #0056b3;
+    background-color: #ffaa00;
 }
 
 /* Cuadrícula de Libros (El corazón del diseño) */
@@ -461,7 +527,41 @@
         text-align: center;
         margin-top: 5px;
     }
-}
+    
+    /* CRÍTICO: Corregir los estilos del header para que no se apilen verticalmente y el logo no se mueva */
+    .header-content {
+        /* Usamos la configuración por defecto, pero ajustamos el padding para móvil */
+        flex-direction: row; 
+        align-items: center; /* Centra los elementos verticalmente */
+        max-width: none; /* No limita el ancho máximo */
+        margin: 0;
+        padding: 10px; /* Un padding simple para los bordes */
+    }
+
+    /* Ajuste para que la imagen sea un poco más pequeña en móvil */
+    .header-logo {
+        width: 200px; 
+        height: auto;
+    }
+    
+    .logo-text {
+        font-size: 0.65em; 
+    }
+    
+    /* Aseguramos que el carrito siga fluyendo normalmente */
+    .carrito-icon-link {
+        position: static; 
+        top: auto; 
+        right: auto;
+        box-shadow: none; /* Quitamos la sombra para que se integre mejor */
+        font-size: 1.8em;
+    }
+
+    /* 3. Ajuste opcional para el título */
+    .header-content h1 {
+        margin-bottom: 0; /* Asegura que no haya un margen excesivo debajo del título */
+    }
+
 
 /* Columna Izquierda: Lista de Ítems */
 .cart-items {
@@ -571,7 +671,7 @@
 .grand-total {
     font-weight: bold;
     font-size: 1.4em !important;
-    color: #007bff;
+    color: #ffaa00;
     padding-top: 10px;
 }
 
@@ -722,4 +822,14 @@
     line-height: 1.6;
     color: #555;
     text-align: justify;
+}
+
+/* FUENTES */
+
+body {
+    /* * Pila de fuentes sans-serif:
+     * 1. 'Helvetica Neue', 'Arial', y 'sans-serif' son las más comunes y seguras.
+     * 2. 'system-ui' usa la fuente sans-serif predeterminada del sistema operativo (recomendado).
+     */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }

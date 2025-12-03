@@ -12,9 +12,12 @@
 
 <header class="main-header">
     <div class="header-content">
-        <h1>
-            <a href="{% url 'catalogo_libros' %}" class="header-link">Librería El Gato Pirata</a>
-        </h1>
+        <div class="logo-container">
+            <a href="{% url 'catalogo_libros' %}" class="header-link-logo">
+                <img src="/media/black-cats.jpg" alt="Logo Librería El Gato Pirata" class="header-logo">
+                <p class="logo-text">Librería El Gato Pirata</p>
+            </a>
+        </div>
         <a href="{% url 'carrito_detail' %}" class="carrito-icon-link">
         🛒 <span class="cart-count">{% if carrito %}{{ carrito|length }}{% else %}0{% endif %}</span> 
         </a>

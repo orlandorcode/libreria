@@ -40,6 +40,12 @@ class CatalogoLibrosView(ListView):
                 Q(editorial__nombre__icontains=query)
             )
         return queryset.order_by('nombre')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Instancia el objeto Carrito usando la request y lo añade al contexto
+        context['carrito'] = Carrito(self.request)
+        return context
 
 
 class DetalleLibroPublicoView(DetailView):
@@ -51,12 +57,57 @@ class DetalleLibroPublicoView(DetailView):
         context = super().get_context_data(**kwargs)
         # El stock total se calcula automáticamente por el @property en el modelo.
         context['stock'] = self.object.stock_total
+        context['carrito'] = Carrito(self.request)
         # Añade la instancia del formulario al contexto para el botón "Añadir al Carrito"
         context['form'] = CarritoAddLibroForm() 
         return context
 
 
 # --- Vistas para Manejar el Carrito (Paso 4) ---
+
+@require_POST
+def carrito_update_quantity(request, libro_id):
+    """
+    Actualiza la cantidad de un libro en el carrito. 
+    Asegura que la cantidad no exceda el stock y elimina si llega a 0.
+    """
+    carrito = Carrito(request)
+    libro = get_object_or_404(Libro, id=libro_id)
+    
+    # 1. Obtener la nueva cantidad solicitada
+    try:
+        nueva_cantidad = int(request.POST.get('cantidad', 1))
+        if nueva_cantidad < 0:
+            raise ValueError
+    except ValueError:
+        messages.error(request, 'La cantidad debe ser un número entero no negativo.')
+        return redirect('carrito_detail')
+
+    # 2. Lógica de Stock y Eliminación
+    if nueva_cantidad == 0:
+        # Si la nueva cantidad es 0, eliminar el ítem
+        carrito.remove(libro)
+        messages.success(request, f'"{libro.nombre}" ha sido eliminado del carrito.')
+    else:
+        # Obtener el stock disponible real
+        stock_real_disponible = libro.stock_total # Usar tu función/propiedad de stock
+        
+        # Validación de Stock
+        if nueva_cantidad > stock_real_disponible:
+            messages.error(
+                request, 
+                f'Error: El stock de "{libro.nombre}" es de {stock_real_disponible} unidades. No puedes agregar {nueva_cantidad}.'
+            )
+            # Redirigir sin hacer cambios, manteniendo la cantidad actual en el carrito.
+            return redirect('carrito_detail')
+        
+        # Si la validación es exitosa, actualizar el carrito.
+        # La función add con override=True sirve para esto.
+        carrito.add(libro, cantidad=nueva_cantidad, override_quantity=True)
+        messages.success(request, f'Cantidad de "{libro.nombre}" actualizada a {nueva_cantidad}.')
+        
+    return redirect('carrito_detail')
+
 
 @require_POST
 def carrito_add(request, libro_id):

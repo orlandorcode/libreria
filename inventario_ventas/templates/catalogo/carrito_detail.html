@@ -11,9 +11,12 @@
 
 <header class="main-header">
     <div class="header-content">
-        <h1>
-            <a href="{% url 'catalogo_libros' %}" class="header-link">Librería El Gato Pirata</a>
-        </h1>
+        <div class="logo-container">
+            <a href="{% url 'catalogo_libros' %}" class="header-link-logo">
+                <img src="/media/black-cats.jpg" alt="Logo Librería El Gato Pirata" class="header-logo">
+                <p class="logo-text">Librería El Gato Pirata</p>
+            </a>
+        </div>
         <a href="{% url 'carrito_detail' %}" class="carrito-icon-link">
         🛒 <span class="cart-count">{% if carrito %}{{ carrito|length }}{% else %}0{% endif %}</span> 
         </a>
@@ -49,8 +52,36 @@
                     </div>
 
                     <div class="item-quantity-control">
-                        <p>Cantidad: <strong>{{ item.cantidad }}</strong></p>
+                        <p>
+                            Cantidad: 
+                            <form action="{% url 'carrito_update_quantity' item.libro.id %}" method="post" style="display:inline-block; margin-right: 5px;">
+                                {% csrf_token %}
+                                <input type="hidden" name="cantidad" value="{{ item.cantidad|add:"-1" }}">
+                                <button type="submit" class="qty-btn" title="Disminuir cantidad" style="font-size: 1.2em;">
+                                    ➖
+                                </button>
+                            </form>
+                            <strong>{{ item.cantidad }}</strong>
+                            <form action="{% url 'carrito_update_quantity' item.libro.id %}" method="post" style="display:inline-block; margin-left: 5px;">
+                                {% csrf_token %}
+                                <input type="hidden" name="cantidad" value="{{ item.cantidad|add:"1" }}">
+                                <button type="submit" class="qty-btn" title="Aumentar cantidad" style="font-size: 1.2em;">
+                                    ➕
+                                </button>
+                            </form>
+                        </p>
                         <p>Subtotal: <strong>${{ item.total_linea|floatformat:2 }}</strong></p>
+                    </div>
+
+                    <div class="item-actions">
+                        
+                        <form action="{% url 'carrito_remove' item.libro.id %}" method="post" class="remove-form">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-btn" title="Eliminar {{ item.libro.nombre }} del carrito">
+                                ❌ Eliminar
+                            </button>
+                        </form>
+                        
                     </div>
 
                 </div>
